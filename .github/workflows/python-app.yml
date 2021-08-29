@@ -1,0 +1,35 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Github Pipeline Jasneet
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python app latest Name
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8.2
+    - name: Install all the dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run tests
+      run: |
+        python -m unittest
+        
+    - uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_email: "jasneetkaur25252@gmail.com"
+        heroku_api_key: "2ce7f269-71d9-444c-89a2-fb5025bf09c8"
+        heroku_app_name: "books-api-jasneet"
